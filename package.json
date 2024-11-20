@@ -1,0 +1,23 @@
+{
+  "name": "scss-helpers",
+  "version": "0.1.0",
+  "description": "Useful SCSS functions and mixins",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olivermerz/scss-helpers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/olivermerz/scss-helpers/issues"
+  },
+  "keywords": [
+    "sass",
+    "scss",
+    "mixins",
+    "functions"
+  ],
+  "author": "Oliver Merz",
+  "license": "ISC"
+}
