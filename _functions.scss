@@ -1,0 +1,14 @@
+/**
+ * Color contrast function
+ * https://codepen.io/davidhalford/pen/ALrbEP
+ */
+@function color-contrast($color, $dark: #000, $light: #fff) {
+    $color-brightness: round(math.div((red($color) * 299) + (green($color) * 587) + (blue($color) * 114), 1000));
+    $light-color: round(math.div((red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114), 1000));
+
+    @if abs($color-brightness) < ($light-color * .5) {
+        @return $light;
+    } @else {
+        @return $dark;
+    }
+}

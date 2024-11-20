@@ -1,0 +1,154 @@
+@mixin input-placeholder($color: currentColor, $opacity: 1) {
+    &::-webkit-input-placeholder { /* Chrome / Opera / Safari */
+        color: $color;
+        opacity: $opacity;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+        color: $color;
+        opacity: $opacity;
+    }
+
+    &::-moz-placeholder { /* Firefox 19+ */
+        color: $color;
+        opacity: $opacity;
+    }
+
+    &:-ms-input-placeholder { /* IE 10+ */
+        color: $color;
+        opacity: $opacity;
+    }
+}
+
+@mixin text-selection($color: #fff, $background-color: #000) {
+    &::-moz-selection {
+        background: $background-color;
+        color: $color;
+        text-shadow: none;
+    }
+
+    &::selection {
+        background: $background-color;
+        color: $color;
+        text-shadow: none;
+    }
+}
+
+@mixin moz-scrollbar($scrollbar-width: thin, $scrollbar-color: transparent, $thumb-color: #000) {
+    @media screen and (min--moz-device-pixel-ratio: 0) {
+        scrollbar-color: $thumb-color $scrollbar-color;
+        scrollbar-width: $scrollbar-width;
+    }
+}
+
+@mixin webkit-scrollbar($scrollbar-size: 10px, $scrollbar-color: transparent, $thumb-size: 6px, $thumb-color: #000, $thumb-opacity: .3, $thumb-rounded: true) {
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: $scrollbar-size;
+        height: $scrollbar-size;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $scrollbar-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba($thumb-color, $thumb-opacity);
+        @if $scrollbar-color == transparent {
+            background-clip: padding-box;
+        }
+        border: (($scrollbar-size - $thumb-size) * .5) solid $scrollbar-color;
+        @if $thumb-rounded {
+            border-radius: $scrollbar-size * .5;
+        }
+
+        &:hover {
+            background-color: $thumb-color;
+        }
+    }
+}
+
+@mixin hover-focus-visible {
+    &:hover {
+        @content;
+    }
+
+    &:focus-visible {
+        @content;
+    }
+}
+
+@mixin hover-focus-within {
+    &:hover,
+    &.focus-within {
+        @content;
+    }
+
+    &:focus-within {
+        @content;
+    }
+}
+
+@mixin focus-within {
+    &.focus-within {
+        @content;
+    }
+
+    &:focus-within {
+        @content;
+    }
+}
+
+// https://larsmagnus.co/blog/focus-visible-within-the-missing-pseudo-class
+// https://www.bram.us/2023/01/04/css-has-feature-detection-with-supportsselector-you-want-has-not-has/
+@mixin focus-visible-within {
+    @supports not selector(:has(*)) {
+        @include focus-within {
+            @content;
+        }
+    }
+
+    @supports selector(:has(*)) {
+        &:has(:focus-visible) {
+            @content;
+        }
+    }
+}
+
+@mixin hover-focus-visible-within {
+    @supports not selector(:has(*)) {
+        @include hover-focus-within {
+            @content;
+        }
+    }
+
+    @supports selector(:has(*)) {
+        &:hover {
+            @content;
+        }
+
+        &:has(:focus-visible) {
+            @content;
+        }
+    }
+}
+
+@mixin truncate-text($rows: 3, $line-height: 1.5, $height: auto) {
+    overflow: hidden;
+
+    @if $rows == 1 {
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    } @else {
+        display: -webkit-box;
+        -webkit-line-clamp: $rows;
+        -webkit-box-orient: vertical;
+        @if $height == fixed {
+            height: #{$rows * $line-height}em;
+        } @else {
+            max-height: #{$rows * $line-height}em;
+        }
+        line-height: $line-height;
+    }
+}
